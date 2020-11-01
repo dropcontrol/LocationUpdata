@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationDefaultAccuracyReduced</key>
-	<true/>
+	<false/>
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
 	<dict>
 		<key>Location</key>

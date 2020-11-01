@@ -64,7 +64,7 @@ class locationDelegate : NSObject, ObservableObject, CLLocationManagerDelegate {
             manager.startUpdatingLocation()
 
             // add "Privacy - Location Default Accuracy Reduced" in info.plist
-            // and edit in souce code that value is <true/>
+            // and edit in souce code that value is <true/> or <false/>
             if manager.accuracyAuthorization != .fullAccuracy {
                 print("reduce accuracy")
 
