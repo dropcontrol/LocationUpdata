@@ -1,0 +1,2 @@
+# LocationUpdata
+CoreLocationを使って現在のロケーションを取得するサンプル
