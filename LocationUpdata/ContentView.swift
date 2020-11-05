@@ -7,33 +7,48 @@
 
 import SwiftUI
 import MapKit
-//import CoreLocation
+
+// @ObservableObjectの場合
+// 複数のViewを跨ることができる。
+class PlaceInfo: ObservableObject {
+    @Published var latitude: String = "none"
+    @Published var longitude: String = "none"
+}
 
 struct ContentView: View {
-    @State var latitude: String = "not available"
-    @State var longitude: String = "not available"
+// @Stateの場合。
+// 単一Viewでの操作
+//    @State var latitude: String = "not available"
+//    @State var longitude: String = "not available"
+    
+    @ObservedObject var placeInfo = PlaceInfo()
     
     @State var manager = CLLocationManager()
     @StateObject var managerDelegate = locationDelegate()
     
 
     var body: some View {
-                
+        
+        
         VStack{
 
             HStack {
                 Text("Latitude:")
-                Text(latitude)
-
+                Text(placeInfo.latitude)
+//                Text(latitude)　// @state
             }
             HStack {
                 Text("longitude:")
-                Text(longitude)
+                Text(placeInfo.longitude)
+//                Text(longitude) // @state
             }
             Button(action: {
                 print("Button Tapped")
-                latitude = managerDelegate.latitude
-                longitude = managerDelegate.longitude
+                
+                placeInfo.latitude = managerDelegate.currentLatitude
+                placeInfo.longitude = managerDelegate.currentLongitude
+//                latitude = managerDelegate.currentLatitude @state
+//                longitude = managerDelegate.currentLongitude @state
             }){
                 Text("Current Location")
             }
@@ -53,8 +68,10 @@ struct ContentView_Previews: PreviewProvider {
 
 // CLLocatoinManagerDelegate
 class locationDelegate : NSObject, ObservableObject, CLLocationManagerDelegate {
-    @Published var latitude: String = "none"
-    @Published var longitude: String = "none"
+    
+    // delegateから取り出すための@Pubishedな変数
+    @Published var currentLatitude: String = "none"
+    @Published var currentLongitude: String = "none"
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
 
@@ -90,8 +107,8 @@ class locationDelegate : NSObject, ObservableObject, CLLocationManagerDelegate {
             print(String(format: "%+.06f", location.coordinate.latitude))
             print(String(format: "%+.06f", location.coordinate.longitude))
             
-            latitude = String(format: "%+.06f", location.coordinate.latitude)
-            longitude = String(format: "%+.06f", location.coordinate.longitude)
+            currentLatitude = String(format: "%+.06f", location.coordinate.latitude)
+            currentLongitude = String(format: "%+.06f", location.coordinate.longitude)
             
         }
     }
