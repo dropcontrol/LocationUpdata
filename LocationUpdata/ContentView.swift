@@ -70,8 +70,8 @@ struct ContentView_Previews: PreviewProvider {
 class locationDelegate : NSObject, ObservableObject, CLLocationManagerDelegate {
     
     // delegateから取り出すための@Pubishedな変数
-    @Published var currentLatitude: String = "none"
-    @Published var currentLongitude: String = "none"
+    var currentLatitude: String = "none"
+    var currentLongitude: String = "none"
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
 
