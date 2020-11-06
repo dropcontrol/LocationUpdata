@@ -23,8 +23,8 @@ struct ContentView: View {
     
     @ObservedObject var placeInfo = PlaceInfo()
     
-    @State var manager = CLLocationManager()
-    @StateObject var managerDelegate = locationDelegate()
+    var manager = CLLocationManager()
+    var managerDelegate = locationDelegate()
     
 
     var body: some View {
@@ -55,7 +55,7 @@ struct ContentView: View {
         }
         .onAppear() {
             manager.delegate = managerDelegate
-            manager.requestWhenInUseAuthorization()
+            managerDelegate.locationManagerDidChangeAuthorization(manager)
         }
     }
 }
